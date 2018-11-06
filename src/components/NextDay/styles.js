@@ -2,28 +2,37 @@ import createStyles, {colors, baseStyles, fonts} from '../../base.styles';
 
 const HeaderStyles = createStyles({
     container: {
-        flex: 1 / 3,
-        backgroundColor: 'blue',
-    },
-    text: {
-        fontSize: fonts.lg,
-        color: colors.white,
-        fontWeight: '600',
-        paddingLeft: 20,
-    },
-    main: {
-        flex: 3,
-    },
-    sub: {
-        flex: 2,
-        flexDirection: 'row',
-        justifyContent: 'space-between'
-    },
-    right: {
-        // alignSelf: 
-    },
-    button: {
         flex: 1,
+        backgroundColor: colors.white,
+        marginHorizontal: 2.5,
+        alignItems: 'center',
+        justifyContent: 'space-around',
+    },
+    day: {
+        fontSize: fonts.xs,
+        fontWeight: '500',
+        padding: 10,
+    },
+    icon: {
+        width: 70,
+        height: 70,
+    },
+    temperatures: {
+        flexDirection: 'row',
+    },
+    minTemp: {
+        color: colors.gray,
+        fontSize: fonts.md,
+        paddingTop: 2,
+    },
+    maxTemp: {
+        color: colors.black,
+        fontSize: fonts.xl,
+    },
+    realTemp: {
+        color: colors.black,
+        fontSize: fonts.xs,
+        paddingBottom: 5,
     },
 });
 
