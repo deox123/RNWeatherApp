@@ -2,10 +2,11 @@ import createStyles, {colors, dimensions, fonts} from '../../base.styles';
 
 const HeaderStyles = createStyles({
     container: {
-        flex: 2 / 3,
-        // backgroundColor: 'red',
+        flex: 1.6,
         padding: dimensions.md,
         paddingBottom: 0,
+        backgroundColor: colors.white,
+        margin: 5,
     },
     text: {
         fontSize: fonts.lg,
@@ -39,6 +40,7 @@ const HeaderStyles = createStyles({
     minTemp: {
         fontSize: fonts.xxl,
         color: colors.gray,
+        paddingTop: 5,
     },
     description: {
         fontSize: fonts.lg,

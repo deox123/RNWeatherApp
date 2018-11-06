@@ -2,7 +2,7 @@ import createStyles, {colors, fonts} from '../../base.styles';
 
 const HeaderStyles = createStyles({
     container: {
-        height: 50,
+        height: 45,
         backgroundColor: colors.blue,
         flexDirection: 'row',
         alignItems: 'center',
