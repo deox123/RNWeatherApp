@@ -26,6 +26,8 @@ const Header = (props: Props) => {
         // descritpion_flag,
     } = props.weather;
 
+    const clickHandler = props.onClick;
+
     const renderTitle = (d: string): string => {
         let title = '';
         title = isToday(d) && 'Today, ';
@@ -73,9 +75,9 @@ const Header = (props: Props) => {
                     <Text style={styles.detailsText}><Text style={styles.grayText}>Sunset:</Text> {sunset_time} PM</Text>
                 </View>
             </View>
-            <View style={styles.button}>
+            <TouchableHighlight style={styles.button} onPress={clickHandler}>
                 <Text style={styles.buttonText}>SEE HOURLY</Text>
-            </View>
+            </TouchableHighlight>
         </View>
     );
 };

@@ -38,6 +38,7 @@ export type Props = {
     },
     weather: weatherData,
     isFetching: boolean,
+    navigation: any,
 };
 
 export type State = {
