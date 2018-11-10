@@ -56,7 +56,7 @@ const styles = createStyles({
         borderStyle: 'solid',
         borderTopWidth: 0.5,
         borderBottomWidth: 0.5,
-        borderColor: colors.gray,
+        borderColor: colors.backgroundGray,
         marginHorizontal: -15,
         paddingVertical: 3,
     },

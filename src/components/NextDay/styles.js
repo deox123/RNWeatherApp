@@ -1,6 +1,6 @@
 import createStyles, {colors, baseStyles, fonts} from '../../base.styles';
 
-const HeaderStyles = createStyles({
+const styles = createStyles({
     container: {
         flex: 1,
         backgroundColor: colors.white,
@@ -36,4 +36,4 @@ const HeaderStyles = createStyles({
     },
 });
 
-export default HeaderStyles;
+export default styles;
