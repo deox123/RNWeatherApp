@@ -3,7 +3,7 @@
 // flow-disable-next-line
 import * as React from 'react';
 // flow-disable-next-line
-import {Text, View} from 'react-native';
+import {Text, View, TouchableHighlight} from 'react-native';
 
 import {format, isToday, getHours} from 'date-fns';
 
@@ -23,43 +23,74 @@ export class Hourly extends React.Component<Props, State> {
         this.state = {
             firstPage: [],
             nextPage: [],
-            hoursOnNextPage: 0,
-            firstHour: 1,
+            firstHour: 0,
         };
+
+        this.showNextHours = this.showNextHours.bind(this);
     }
 
-    static navigationOptions = {
-        header: <Header title="Weather Forecast" />,
+    static navigationOptions = ({ navigation }) => {
+        return {
+            header: <Header title={format(navigation.getParam('date', 'Weather Forecast'), 'dddd, MMMM D')} />,
+        };
     };
 
-    static getDerivedStateFromProps(props: Props) {
-        const firstHour = 10;
-        const am = props.navigation.getParam('AM', []);
-        const pm = props.navigation.getParam('PM', []);
-        const arr = [];
-        for (let i = 1; i < 13; i++) {
-            arr.push(am[i]);
+    static getDerivedStateFromProps(props: Props, state: State) {
+        if (!state.firstPage.length) {
+            const firstHour = getHours(new Date());
+            const am = props.navigation.getParam('AM', []);
+            const pm = props.navigation.getParam('PM', []);
+            const arr = [];
+            for (let i = 12; i > 0; i--) {
+                const pmIndex = 13 - i;
+                arr.push(am[i]);
+                arr.unshift(pm[pmIndex]);
+            }
+            return {
+                firstPage: arr.slice(firstHour, firstHour + 8),
+                nextPage: arr.slice(firstHour + 8),
+                firstHour,
+            };
         }
-        for (let i = 1; i < 13; i++) {
-            arr.push(pm[i]);
-        }
-        console.log(arr.slice(firstHour, firstHour + 8))
-        console.log(arr.slice(firstHour + 9))
-        return {
-            firstPage: arr.slice(firstHour, firstHour + 8),
-            nextPage: arr.slice(firstHour + 9),
-            firstHour,
-        };
+        // CHECK THIS OUT FFS
+        return null;
+    }
+
+    showNextHours = (): void => {
+        const firstHour = this.state.firstHour + 8;
+        this.setState(prevState => ({
+                firstPage: prevState.nextPage.slice(0, 8),
+                nextPage: prevState.nextPage.slice(8),
+                firstHour,
+        }));
+    }
+
+    renderButtonTitle = (numberOfHoursToShow: number): string => {
+        return numberOfHoursToShow && numberOfHoursToShow <= 8 ? `Show next ${numberOfHoursToShow} hours` : 'Show next 8 hours';
     }
 
     render() {
+        const hoursLeft = this.state.nextPage.length;
         return (
-            <View>
-                <Text>Hourly View</Text>
-                <Text>{this.state.firstHour}</Text>
-                <Text>{this.state.nextPage.length}</Text>
-                {this.state.firstPage.map((hourly, index) =>
-                    <HourlyCard cardHour={index} currentHour={this.state.firstHour} weather={hourly} key={index} />)}
+            <View style={styles.container}>
+                <Text style={styles.title}>Hourly View</Text>
+                <View style={styles.cardContainer}>
+                    {this.state.firstPage.map((hourly, index) => (
+                        <HourlyCard
+                            cardHour={index}
+                            currentHour={this.state.firstHour}
+                            weather={hourly}
+                            key={index}
+                        />),
+                    )}
+                </View>
+                {!!hoursLeft &&
+                    <TouchableHighlight style={styles.button} onPress={this.showNextHours}>
+                        <Text style={styles.buttonTitle}>
+                            {this.renderButtonTitle(hoursLeft)}
+                        </Text>
+                    </TouchableHighlight>
+                }
             </View>
         );
     }
