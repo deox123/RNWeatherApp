@@ -11,7 +11,6 @@ export type hourly = {
 export type State = {
     firstPage: Array<hourly>,
     nextPage: Array<hourly>,
-    hoursOnNextPage: number,
     firstHour: number,
 };
 
