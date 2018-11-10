@@ -4,7 +4,6 @@
 import * as React from 'react';
 // flow-disable-next-line
 import {Text, View, Image} from 'react-native';
-import {format} from 'date-fns';
 
 import styles from './styles';
 
@@ -25,13 +24,20 @@ const Header = (props: Props) => {
     } = props;
 
     const renderTitle = (): string => {
-        const aaa = currentHour + cardHour + 1;
-        return aaa <= 12 ? `${aaa} AM` : `${aaa % 12} PM`;
-    }
+        const hour = currentHour + cardHour + 1;
+        return hour <= 12 ? `${hour} AM` : `${hour % 12} PM`;
+    };
 
     return (
-        <View>
-            <Text style={styles.day}>{renderTitle()}</Text>
+        <View style={styles.container}>
+            <Text style={styles.hour}>{renderTitle()}</Text>
+            <Image
+                source={icon}
+                style={styles.icon}
+            />
+            <Text style={styles.desc}>{description_flag}</Text>
+            <Text style={styles.temperature}>{temperature}°</Text>
+            <Text style={styles.wind}>{wind} km/h</Text>
         </View>
     );
 };
