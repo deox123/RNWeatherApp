@@ -17,8 +17,6 @@ const Header = (props: Props) => {
         onBack,
     } = props;
 
-    console.log(onBack);
-
     return (
         <View style={styles.container}>
             {onBack &&

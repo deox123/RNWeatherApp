@@ -21,6 +21,7 @@ const styles = createStyles({
         width: 50,
     },
     desc: {
+        // textTransform: 'capitalize',
         color: colors.gray,
         fontSize: fonts.xs,
         height: 35,
