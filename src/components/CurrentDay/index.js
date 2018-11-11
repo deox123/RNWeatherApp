@@ -5,14 +5,15 @@ import * as React from 'react';
 // flow-disable-next-line
 import {Text, View, TouchableHighlight, Image} from 'react-native';
 import {format, isToday} from 'date-fns';
+import {getDescriptionFlag} from '../../utils/helperFunctions';
 
 import styles from './styles';
 
 import type {Props} from './types';
 
-const icon = require('../../../images/partly_sunny.png');
+import images, {rightArrow} from '../../../images/index';
 
-const Header = (props: Props) => {
+const CurrentDay = (props: Props) => {
     const {
         date,
         precipitation,
@@ -23,27 +24,20 @@ const Header = (props: Props) => {
         sunset_time,
         morning_temperature,
         temperature,
-        // descritpion_flag,
+        hourly,
     } = props.weather;
+
 
     const clickHandler = props.onClick;
 
     const renderTitle = (d: string): string => {
         let title = '';
-        title = isToday(d) && 'Today, ';
+        title = isToday(d) ? 'Today, ' : '';
         title += format(d, 'MMMM D');
         return title.toUpperCase();
     };
 
-    // let icon;
-    // switch(descritpion_flag) {
-    //     case 'partly_sunny':
-    //         icon = require('images/partly_sunny');
-    //         break;
-
-    //     case 'rain':
-    //         icon = require('./my-icon-active.png');
-    // }
+    const descriptionFlag = getDescriptionFlag(hourly);
 
     return (
         <View style={styles.container}>
@@ -58,8 +52,7 @@ const Header = (props: Props) => {
                         <Text style={styles.description}>Partly sunny</Text>
                     </View>
                     <Image
-                        source={icon}
-                        // style={styles.icon}
+                        source={images[descriptionFlag]}
                     />
                 </View>
             </View>
@@ -75,11 +68,14 @@ const Header = (props: Props) => {
                     <Text style={styles.detailsText}><Text style={styles.grayText}>Sunset:</Text> {sunset_time} PM</Text>
                 </View>
             </View>
-            <TouchableHighlight style={styles.button} onPress={clickHandler}>
-                <Text style={styles.buttonText}>SEE HOURLY</Text>
+            <TouchableHighlight  activeOpacity={100} underlayColor="white" onPress={clickHandler}>
+                <View style={styles.button}>
+                    <Text style={styles.buttonText}>SEE HOURLY</Text>
+                    <Image source={rightArrow} style={styles.arrow} />
+                </View>
             </TouchableHighlight>
         </View>
     );
 };
 
-export default Header;
+export default CurrentDay;

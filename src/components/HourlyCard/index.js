@@ -9,8 +9,7 @@ import styles from './styles';
 
 import type {Props} from './types';
 
-
-const icon = require('../../../images/partly_sunny.png');
+import images from '../../../images/index';
 
 const Header = (props: Props) => {
     const {
@@ -32,10 +31,10 @@ const Header = (props: Props) => {
         <View style={styles.container}>
             <Text style={styles.hour}>{renderTitle()}</Text>
             <Image
-                source={icon}
+                source={images[description_flag]}
                 style={styles.icon}
             />
-            <Text style={styles.desc}>{description_flag}</Text>
+            <Text style={styles.desc}>{description_flag.replace(/_/g, ' \n')}</Text>
             <Text style={styles.temperature}>{temperature}°</Text>
             <Text style={styles.wind}>{wind} km/h</Text>
         </View>
