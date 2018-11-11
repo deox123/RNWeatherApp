@@ -29,6 +29,7 @@
         "flowtype"
     ],
     "rules": {
+        "camelcase":"off",
         "jsx-a11y/label-has-for": [2, {"required": {"some": ["nesting", "id"]}}],
         "function-paren-newline": "off",
         "class-methods-use-this": "off",
