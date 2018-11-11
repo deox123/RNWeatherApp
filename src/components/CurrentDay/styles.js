@@ -74,8 +74,8 @@ const styles = createStyles({
     },
     button: {
         height: 50,
-        alignItems: 'flex-end',
-        alignContent: 'flex-end',
+        flexDirection: 'row',
+        alignItems: 'center',
     },
     buttonText: {
         color: colors.blue,
@@ -84,6 +84,11 @@ const styles = createStyles({
         textAlign: 'right',
         flex: 1,
         textAlignVertical: 'center',
+        marginRight: 5,
+    },
+    arrow: {
+        width: 14,
+        height: 14,
     },
 });
 

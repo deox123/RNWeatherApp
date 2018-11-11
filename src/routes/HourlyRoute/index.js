@@ -3,11 +3,13 @@
 // flow-disable-next-line
 import * as React from 'react';
 // flow-disable-next-line
-import {Text, View, TouchableHighlight} from 'react-native';
+import {Text, View, TouchableHighlight, Image} from 'react-native';
 
 import {format, isToday, getHours} from 'date-fns';
 
 import styles from './styles';
+
+import {leftArrow} from '../../../images/index';
 
 import type {
     Props,
@@ -27,17 +29,19 @@ export class Hourly extends React.Component<Props, State> {
         };
 
         this.showNextHours = this.showNextHours.bind(this);
+        this.backHandler = this.backHandler.bind(this);
     }
 
     static navigationOptions = ({ navigation }) => {
         return {
-            header: <Header title={format(navigation.getParam('date', 'Weather Forecast'), 'dddd, MMMM D')} />,
+            header: <Header title={format(navigation.getParam('date', 'Weather Forecast'), 'dddd, MMMM D')} onBack={navigation} />,
         };
     };
 
     static getDerivedStateFromProps(props: Props, state: State) {
         if (!state.firstPage.length) {
-            const firstHour = getHours(new Date());
+            const date = props.navigation.getParam('date', []);
+            const firstHour = isToday(date) ? getHours(new Date()) : 0;
             const am = props.navigation.getParam('AM', []);
             const pm = props.navigation.getParam('PM', []);
             const arr = [];
@@ -52,8 +56,11 @@ export class Hourly extends React.Component<Props, State> {
                 firstHour,
             };
         }
-        // CHECK THIS OUT FFS
         return null;
+    }
+
+    backHandler = () => {
+        this.props.navigation.goBack();
     }
 
     showNextHours = (): void => {

@@ -13,6 +13,11 @@ const HeaderStyles = createStyles({
         fontWeight: '600',
         paddingLeft: 20,
     },
+    arrow: {
+        width: 14,
+        height: 14,
+        marginHorizontal: 20,
+    },
 });
 
 export default HeaderStyles;
