@@ -1,9 +1,10 @@
-import createStyles, {colors, dimensions} from '../../base.styles';
+import createStyles, {colors} from '../../base.styles';
 
 const HomeStyles = createStyles({
     container: {
         flex: 1,
         backgroundColor: colors.backgroundGray,
+        justifyContent: 'center',
     },
     nextThreeDays: {
         flex: 1,

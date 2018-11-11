@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
 // flow-disable-next-line
-import {View} from 'react-native';
+import {View, ActivityIndicator} from 'react-native';
 
 import {format, addDays} from 'date-fns';
 
@@ -32,6 +32,7 @@ export class Home extends React.Component<Props, State> {
         };
 
         this.viewHourly = this.viewHourly.bind(this);
+        this.changeCurrentDay = this.changeCurrentDay.bind(this);
     }
 
     static navigationOptions = {
@@ -44,6 +45,15 @@ export class Home extends React.Component<Props, State> {
             end: format(addDays(new Date(), 4), 'YYYY-MM-DD'),
         };
         this.props.actions.getWeather(data);
+    }
+
+    prepareDate = date => ({
+        start: format(date, 'YYYY-MM-DD'),
+        end: format(addDays(date, 4), 'YYYY-MM-DD'),
+    })
+
+    changeCurrentDay = (day: weather) => () => {
+        this.props.actions.getWeather(this.prepareDate(day));
     }
 
     viewHourly = () => this.props.navigation.navigate('Hourly', {
@@ -60,14 +70,17 @@ export class Home extends React.Component<Props, State> {
 
         return (
             <View style={styles.container}>
-                {!isFetching &&
-                    <View style={{flex: 1}}>
+                {isFetching
+                    ? <ActivityIndicator size="large" color="blue" />
+                    : <View style={{flex: 1}}>
                         <CurrentDay weather={weather[0]} onClick={this.viewHourly} />
                         <View style={styles.nextThreeDays}>
-                        {/* REFACTOR THIS SHIT */}
-                            <NextDay weather={weather[1]} />
-                            <NextDay weather={weather[2]} />
-                            <NextDay weather={weather[3]} />
+                            {weather.map((day, index) => index !== 0 ? 
+                                <NextDay
+                                    weather={day}
+                                    key={day.date}
+                                    onPress={this.changeCurrentDay(day.date)} />
+                                    : null)}
                         </View>
                     </View>
                 }
